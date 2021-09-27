@@ -14,5 +14,5 @@ if (!$conn) {
 
   die("oops we failed to connect: " . mysqli_connect_error());
 } else {
-  echo "connection is created<br>";
+  // echo "connection is created<br>";
 }
