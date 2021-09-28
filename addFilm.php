@@ -1,3 +1,53 @@
+<?php
+$insert = false;
+if (isset($_POST['name'])) {
+  // Set connection variables
+  $server = "localhost";
+  $username = "root";
+  $password = "";
+  $database = "sakila";
+
+  // Create a database connection
+  $conn = mysqli_connect($server, $username, $password, $database);
+
+  // Check for connection success
+  if (!$conn) {
+    die("connection to this database failed due to" . mysqli_connect_error());
+  }
+  //echo "Success connecting to the db";
+
+  // Collect post variables
+  $name = $_POST['name'];
+  $description = $_POST['description'];
+  $language = $_POST['language'];
+  $releaseyear = $_POST['releaseyear'];
+  $speacialfeatures = $_POST['speacialfeatures'];
+
+
+  $sql = "INSERT INTO film (title, description, language_id, release_year, special_features)
+   VALUES 
+  ('$name', '$description', '$language' , '$releaseyear', '$speacialfeatures')";
+  // echo $sql;
+
+  $result = $conn->query($sql) or die('insert failed<br>' . $sql . '<br>' . mysqli_error($conn));
+  $insert = true;
+
+  // Execute the query
+  /*if ($conn->query($sql) == true) {
+    echo "Successfully inserted";
+
+    Flag for successful insertion
+    $insert = true;
+  } else {
+    echo "ERROR: $sql <br> $conn->error";
+  }*/
+
+  // Close the database connection
+  $conn->close();
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -18,11 +68,11 @@
 
       <p id="description" class="description text-center">
 
-        <!-- <?php
-              if ($insert == true) {
-                echo "<p class='submitMsg'>Thanks for submitting your Feedback. We valued your opinion!</p>";
-              }
-              ?>-->
+        <?php
+        if ($insert == true) {
+          echo "<p class='submitMsg'>Thanks for Adding Movie Information. We Love it!</p>";
+        }
+        ?>
       </p>
     </header>
     <form action="addFilm.php" id="add-film" method="post">
@@ -32,12 +82,8 @@
         <input type="text" name="name" id="name" class="form-control" placeholder="enter Movie title" required />
       </div>
       <div class="form-group">
-        <label id="name-label" for="name">Description</label>
+        <label id="name-label" for="description">Description</label>
         <input type="text" name="description" id="description" class="form-control" placeholder="enter Movie description" required />
-      </div>
-      <div class="form-group">
-        <label id="name-label" for="name">release_year</label>
-        <input type="number" name="release_year" id="release_year" class="form-control" placeholder="enter year" required />
       </div>
 
       <div class="form-group">
@@ -50,57 +96,28 @@
           <option value="4">mandarian</option>
           <option value="5">French</option>
         </select>
-
-        <div class="form-group">
-          <label id="name-label" for="name">Rental Period</label>
-          <input type="number" name="rental_period" id="rental_period" class="form-control" enter Rental period="enter number" required />
-        </div>
-
-        <div class="form-group">
-          <label id="name-label" for="name">Rental Price</label>
-          <input type="number" name="rental_price " id="rental_price" class=" form-control" enter Rental price="enter price" required />
-        </div>
-
-        <div class="form-group">
-          <label id="name-label" for="name">Length</label>
-          <input type="number" name="length " id="rental_price" class=" form-control" enter length="enter number" required />
-        </div>
-
-        <div class="form-group">
-          <label id="name-label" for="name">Replacement cost</label>
-          <input type="number" name="replacement_cost " id="replacement_cost" class=" form-control" enter replacement cost="enter number" required />
-        </div>
       </div>
 
       <div class="form-group">
-        <label id="name-label" for="name">Age limit</label>
-        <input type="number" name="age " id="age" class=" form-control" enter Rental price="enter number" required />
+        <label id="name-label" for="releasesyear">release_year</label>
+        <input type="number" name="releaseyear" id="releaseear" class="form-control" min="1950" max="2021" placeholder="enter year" required />
       </div>
+
+
+
 
       <div class="form-group">
 
-        <p>Enter Speacial Featiures</p>
-        <label class="lable"> Trailers
-          <input type="checkbox" checked="cheked">
-          <span class="checkmark"></span>
-        </label>
-        <label class="label"> Deleted scenes
-          <input type="checkbox" checked="cheked">
-          <span class="checkmark"></span>
-        </label>
-        <label class="label"> Commentaries
-          <input type="checkbox" checked="cheked">
-          <span class="checkmark"></span>
-        </label>
-        <label class="label"> Behind the scenes
-          <input type="checkbox" checked="cheked">
-          <span class="checkmark"></span>
-        </label>
+        <legend>Enter the special features</legend>
+        <input type="checkbox" name="speacialfeatures" id="speacialfeatures" value="Trailers">Trailers<br>
+        <input type="checkbox" name="speacialfeatures" id="speacialfeatures" value="Deleted Scenes">Deleted Scenes<br>
+        <input type="checkbox" name="speacialfeatures" id="speacialfeatures" value="Behind the Scenes">Behind the Scenes<br>
+        <input type="checkbox" name="speacialfeatures" id="speacialfeatures" value="Commentaries">Commentaries<br>
 
 
       </div>
       <div class="form-group">
-        <button type="submit" id="submit" class="submit-button">
+        <button type="submit" name="submit " id="submit" value="submit" class="submit-button">
           Submit
         </button>
       </div>

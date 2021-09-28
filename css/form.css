@@ -20,7 +20,7 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.4;
-  color: var(--color-white);
+  color: grey;
   margin: 0;
   text-align: center;
 }
@@ -101,19 +101,14 @@ button {
 .header {
   padding: 0 0.625rem;
   margin-bottom: 1.875rem;
-  color: orangered;
+  color: var(--color-orange);
+  font-size: large;
 }
 
 .description {
   font-style: italic;
   font-weight: 200;
   text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
-}
-
-.clue {
-  margin-left: 0.25rem;
-  font-size: 0.9rem;
-  color: #e4e4e4;
 }
 
 .text-center {
@@ -123,7 +118,7 @@ button {
 /* form */
 
 form {
-  background: var (--color-darkblue-alpha);
+  background: rgba(231, 231, 241, 0.5);
   padding: 2.5rem;
   border-radius: 0.25rem;
 }
@@ -176,5 +171,5 @@ form {
 }
 .submitMsg {
   text-align: center;
-  color: rgb(80, 219, 173);
+  color: green;
 }
