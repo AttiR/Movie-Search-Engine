@@ -1,5 +1,6 @@
 <?php
 $insert = false;
+$error_name = "";
 if (isset($_POST['name'])) {
   // Set connection variables
   $server = "localhost";
@@ -11,29 +12,38 @@ if (isset($_POST['name'])) {
   $conn = mysqli_connect($server, $username, $password, $database);
 
   // Check for connection success
+
   if (!$conn) {
     die("connection to this database failed due to" . mysqli_connect_error());
   }
-  //echo "Success connecting to the db";
 
+  //echo "Success connecting to the db";
+  //echo "name is:" .$_POST['name']. '<br>';
+  //echo "description is:" .$_POST['description']. '<br>';
   // Collect post variables
+
   $name = $_POST['name'];
   $description = $_POST['description'];
   $language = $_POST['language'];
   $releaseyear = $_POST['releaseyear'];
-  $speacialfeatures = $_POST['speacialfeatures'];
+  $specialfeatures = $_POST['specialfeatures'];
 
+  $error_name = " ";
+  if (empty($name) || empty($description)  || empty($language) || empty($releaseyear) || empty($specialfeatures)) {
 
-  $sql = "INSERT INTO film (title, description, language_id, release_year, special_features)
+    $error_name = "Please Insert your values";
+  } else {
+
+    $sql = "INSERT INTO film (title, description, language_id, release_year, special_features)
    VALUES 
-  ('$name', '$description', '$language' , '$releaseyear', '$speacialfeatures')";
-  // echo $sql;
+  ('$name', '$description', '$language' , '$releaseyear', '$specialfeatures')";
+    // echo $sql;
 
-  $result = $conn->query($sql) or die('insert failed<br>' . $sql . '<br>' . mysqli_error($conn));
-  $insert = true;
+    $result = $conn->query($sql) or die('insert failed<br>' . $sql . '<br>' . mysqli_error($conn));
+    $insert = true;
 
-  // Execute the query
-  /*if ($conn->query($sql) == true) {
+    // Execute the query
+    /*if ($conn->query($sql) == true) {
     echo "Successfully inserted";
 
     Flag for successful insertion
@@ -41,6 +51,10 @@ if (isset($_POST['name'])) {
   } else {
     echo "ERROR: $sql <br> $conn->error";
   }*/
+  }
+
+
+
 
   // Close the database connection
   $conn->close();
@@ -66,28 +80,30 @@ if (isset($_POST['name'])) {
     <header class="header">
       <h1 id="title" class="text-center">Add your Favuorite Movie to DataBase</h1>
 
-      <p id="description" class="description text-center">
 
-        <?php
-        if ($insert == true) {
-          echo "<p class='submitMsg'>Thanks for Adding Movie Information. We Love it!</p>";
-        }
-        ?>
+
+      <?php
+      if ($insert == true) {
+        echo "<p class='submitMsg'>Thanks for Adding Movie Information. We Love it!</p>";
+      }
+      ?>
       </p>
     </header>
     <form action="addFilm.php" id="add-film" method="post">
 
       <div class="form-group">
         <label id="name-label" for="name">Title</label>
-        <input type="text" name="name" id="name" class="form-control" placeholder="enter Movie title" required />
+        <input type="text" name="name" id="name" class="form-control" placeholder="enter Movie title" />
+        <span class="error"> <?php echo $error_name; ?></span>
       </div>
       <div class="form-group">
         <label id="name-label" for="description">Description</label>
-        <input type="text" name="description" id="description" class="form-control" placeholder="enter Movie description" required />
+        <input type="text" name="description" id="description" class="form-control" placeholder="enter Movie description" />
+        <span class="error"> <?php echo $error_name; ?></span>
       </div>
 
       <div class="form-group">
-        <select id="language" name="language" class="form-control" required>
+        <select id="language" name="language" class="form-control">
 
           <option value="select Language"> -- Select Language_id --</option>
           <option value="1">English</option>
@@ -96,12 +112,15 @@ if (isset($_POST['name'])) {
           <option value="4">mandarian</option>
           <option value="5">French</option>
         </select>
+        <span class="error"> <?php echo $error_name; ?></span>
       </div>
 
       <div class="form-group">
         <label id="name-label" for="releasesyear">release_year</label>
-        <input type="number" name="releaseyear" id="releaseear" class="form-control" min="1950" max="2021" placeholder="enter year" required />
+        <input type="number" name="releaseyear" id="releaseear" class="form-control" min="1950" max="2021" placeholder="enter year" />
+        <span class="error"> <?php echo $error_name; ?></span>
       </div>
+
 
 
 
@@ -109,13 +128,14 @@ if (isset($_POST['name'])) {
       <div class="form-group">
 
         <legend>Enter the special features</legend>
-        <input type="checkbox" name="speacialfeatures" id="speacialfeatures" value="Trailers">Trailers<br>
-        <input type="checkbox" name="speacialfeatures" id="speacialfeatures" value="Deleted Scenes">Deleted Scenes<br>
-        <input type="checkbox" name="speacialfeatures" id="speacialfeatures" value="Behind the Scenes">Behind the Scenes<br>
-        <input type="checkbox" name="speacialfeatures" id="speacialfeatures" value="Commentaries">Commentaries<br>
+        <input type="checkbox" name="specialfeatures" id="specialfeatures" value="Trailers">Trailers<br>
+        <input type="checkbox" name="specialfeatures" id="specialfeatures" value="Deleted Scenes">Deleted Scenes<br>
+        <input type="checkbox" name="specialfeatures" id="specialfeatures" value="Behind the Scenes">Behind the Scenes<br>
+        <input type="checkbox" name="specialfeatures" id="specialfeatures" value="Commentaries">Commentaries<br>
 
 
       </div>
+      <span class="error"> <?php echo $error_name; ?></span>
       <div class="form-group">
         <button type="submit" name="submit " id="submit" value="submit" class="submit-button">
           Submit
