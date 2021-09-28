@@ -55,6 +55,7 @@ body::before {
   padding: 0 0.425rem;
   margin-bottom: 1.875rem;
   margin-top: 50px;
+  color: rgb(253, 111, 16);
 }
 
 h1 {
@@ -78,16 +79,10 @@ td,
 th {
   padding: 10px;
 }
-.container {
+#movie-search {
   background: rgba(231, 231, 241, 0.6);
   padding: 2.5rem 0.425rem;
   border-radius: 0.25rem;
-}
-
-@media (min-width: 480px) {
-  form {
-    padding: 2.5rem;
-  }
 }
 input {
   border: 1px solid #db945b;
@@ -101,4 +96,11 @@ input {
 
 button {
   margin-top: 20px;
+}
+
+/* ADD FILM  */
+
+.container {
+  width: 100%;
+  margin: 3.125rem auto 0 auto;
 }

@@ -28,7 +28,7 @@
         Thank you for using the App, Search your Favourite Movie!
       </p>
     </header>
-    <div class="container">
+    <div class="container" id="movie-search">
 
       <form action="" method="post">
         <input type="text" name="search" placeholder="enter movie name or some key" aria-label="Search"><br>
