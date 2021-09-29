@@ -1,6 +1,10 @@
  <?php
     $insert = false;
-    $error = "";
+    $year_error = "";
+    $name_error = "";
+    $check_error = "";
+    $des_error = "";
+    $lan_error = "";
 
     if (isset($_POST['name'])) {
         // Set connection variables
@@ -40,19 +44,31 @@
         // Validation
 
 
-        if (empty($name) || empty($description)  || empty($language) || empty($releaseyear) || empty($specialfeatures)) {
+        if (empty($name)) {
 
-            $error = "Please Insert your values";
-        }
-        if (!ctype_digit($_POST['releaseyear']) || $_POST['releaseyear'] > 2021) {
+            $name_error = "Please Insert your values";
+        } elseif (!preg_match("/^[a-zA-Z']*$/", $name)) {
+            $name_error = "Please Insert only alphabits and white spaces";
+        } elseif (empty($description)) {
 
-            $error = "enter valid year range";
-        } elseif (!preg_match("/^[a-zA-Z']", $name)) {
-            $error = "Please Insert only alphabits and white spaces";
+            $des_error = "Please Insert your values";
+        } elseif (empty($language)) {
+
+            $lan_error = "Please select the Language";
+        } elseif (empty($releaseyear)) {
+
+
+            $year_error = "Please Insert your values";
+        } elseif (!ctype_digit($_POST['releaseyear']) || $_POST['releaseyear'] > 2021) {
+
+            $year_error = "enter valid year range";
+        } elseif (empty($specialfeatures)) {
+
+            $check_error = "please check the box";
         } else {
             $sql = "INSERT INTO film (title, description, language_id, release_year, special_features)
-      VALUES 
-      ('$name', '$description', '$language' , '$releaseyear', '$specialfeatures')";
+        VALUES 
+        ('$name', '$description', '$language' , '$releaseyear', '$specialfeatures')";
             // echo $sql;
 
             $result = $conn->query($sql) or die('insert failed<br>' . $sql . '<br>' . mysqli_error($conn));
@@ -60,13 +76,13 @@
 
             // Execute the query
             /*if ($conn->query($sql) == true) {
-      echo "Successfully inserted";
+           echo "Successfully inserted";
 
-      Flag for successful insertion
+            Flag for successful insertion
       
-    } else {
-      echo "ERROR: $sql <br> $conn->error";
-    }*/
+            } else {
+            echo "ERROR: $sql <br> $conn->error";
+            }*/
         }
 
         // Close the database connection
@@ -105,13 +121,13 @@
                  <label id="name-label" for="name">Title</label>
                  <input type="text" name="name" id="name" class="form-control" placeholder="enter Movie title" />
                  <span class="error">
-                     <?php echo $error; ?></span>
+                     <?php echo $name_error; ?></span>
              </div>
              <div class="form-group">
                  <label id="name-label" for="description">Description</label>
                  <input type="text" name="description" id="description" class="form-control" placeholder="enter Movie description" />
                  <span class="error">
-                     <?php echo $error; ?></span>
+                     <?php echo $des_error; ?></span>
              </div>
 
              <div class="form-group">
@@ -126,14 +142,14 @@
                      <option value="5">French</option>
                  </select>
                  <span class="error">
-                     <?php echo $error; ?></span>
+                     <?php echo $lan_error; ?></span>
              </div>
 
              <div class="form-group">
-                 <label id="name-label" for="releasesyear">release_year</label>
+                 <label id="name-label" for="releasesyear">release_year (1990-2021)</label>
                  <input type="number" name="releaseyear" id="releaseear" class="form-control" placeholder="enter year" />
                  <span class="error">
-                     <?php echo $error; ?></span>
+                     <?php echo $year_error; ?></span>
              </div>
 
              <div class="form-group">
@@ -149,7 +165,7 @@
 
              </div>
              <span class="error">
-                 <?php echo $error; ?></span>
+                 <?php echo $check_error; ?></span>
              <div class="form-group">
                  <button type="submit" name="submit " id="submit" value="submit" class="submit-button">
                      Submit
