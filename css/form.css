@@ -153,11 +153,16 @@ form {
   box-shadow: 0 0 0 0.2rem rgba(231, 148, 22, 0.25);
 }
 
-.input-textarea {
-  min-height: 120px;
-  width: 100%;
-  padding: 0.625rem;
-  resize: vertical;
+.input-checkbox {
+  display: inline-block;
+  margin-right: 0.625rem;
+  min-height: 1.25rem;
+  min-width: 1.25rem;
+}
+.clue {
+  margin-left: 0.25rem;
+  font-size: 0.9rem;
+  color: #e4e4e4;
 }
 
 .submit-button {
