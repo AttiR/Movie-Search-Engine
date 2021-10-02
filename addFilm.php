@@ -7,24 +7,11 @@
     $lan_error = "";
 
     if (isset($_POST['name'])) {
-        // Set connection variables
-        $server = "localhost";
-        $username = "root";
-        $password = "";
-        $database = "sakila";
 
-        // Create a database connection
-        $conn = mysqli_connect($server, $username, $password, $database);
+        // connection db
 
-        // Check for connection success
-
-        if (!$conn) {
-            die("connection to this database failed due to" . mysqli_connect_error());
-        }
-
-        //echo "Success connecting to the db";
-        //echo "name is:" .$_POST['name']. '<br>';
-        //echo "description is:" .$_POST['description']. '<br>';
+        require_once("connectdb.php");
+        
         // Collect post variables
 
         function test_input($data)
@@ -73,16 +60,6 @@
 
             $result = $conn->query($sql) or die('insert failed<br>' . $sql . '<br>' . mysqli_error($conn));
             $insert = true;
-
-            // Execute the query
-            /*if ($conn->query($sql) == true) {
-           echo "Successfully inserted";
-
-            Flag for successful insertion
-      
-            } else {
-            echo "ERROR: $sql <br> $conn->error";
-            }*/
         }
 
         // Close the database connection
